@@ -1,0 +1,28 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 10px;
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 2px solid black;
+  width: auto;
+}
+
+.backButton:hover {
+  background-color: blue;
+}
+
+.backButton:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.arrow {
+  margin-right: 5px; /* Отступ от стрелки */
+  font-size: 20px; /* Размер стрелки */
+}

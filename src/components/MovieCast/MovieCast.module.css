@@ -1,0 +1,50 @@
+.castItem {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.castImg {
+  width: 200px;
+  background-color: #e5e5e5;
+  transition: transform 0.3s ease;
+}
+
+.castImg:hover {
+  transform: scale(1.1);
+}
+
+.castName {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 8px 22px;
+  color: #333;
+  position: relative; /* Для того чтобы разместить псевдоэлемент перед текстом */
+  padding-left: 20px; /* Отступ слева для текста, чтобы точка не накладывалась */
+}
+
+.castName::before {
+  content: "•"; /* Это точка перед именем */
+  color: black; /* Цвет точки */
+  font-size: 18px; /* Размер точки */
+  position: absolute;
+  left: 0; /* Позиционируем точку слева */
+  top: 50%;
+  transform: translateY(-50%); /* Центрируем точку по вертикали */
+}
+
+.character {
+  font-size: 15px;
+  color: #333;
+  margin-top: 5px;
+  margin-left: 40px;
+}
+
+.noImageText {
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 90px;
+  font-style: italic;
+  margin-bottom: 90px;
+}
