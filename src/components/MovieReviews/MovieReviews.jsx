@@ -6,7 +6,7 @@ import Error from "../Error/Error";
 import css from "./MovieReviews.module.css";
 
 const MovieReviews = () => {
-  const { movieId } = useParams(); // Получаем ID фильма из URL.
+  const { movieId } = useParams(); 
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

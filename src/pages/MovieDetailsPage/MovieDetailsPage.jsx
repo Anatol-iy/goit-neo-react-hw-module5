@@ -1,77 +1,73 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams, useLocation } from "react-router-dom"; // Используем useLocation для получения состояния
 import { fetchMovieDetails, getImageUrl } from "../../api/movies";
 import css from "./MovieDetailsPage.module.css";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/Error/Error";
 
 const MovieDetailsPage = () => {
- 
-  const { movieId } = useParams(); // Получение параметра movieId из URL (идентификатор фильма).
-
-  const [movie, setMovie] = useState(); // Состояние для хранения информации о фильме.
-  const [loading, setLoading] = useState(false); // Состояние для отображения индикатора загрузки.
-  const [error, setError] = useState(false); // Состояние для отображения ошибки, если что-то пойдет не так.
+  const { movieId } = useParams(); // Получение параметра movieId из URL
+  const location = useLocation(); // Получаем текущую локацию
+  const [movie, setMovie] = useState(); // Состояние для фильма
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    // Хук useEffect для выполнения побочного эффекта при изменении movieId.
-    if (!movieId) return; 
+    if (!movieId) return;
 
     async function fetchData() {
-
       try {
-        setLoading(true); // Устанавливаем состояние загрузки в true.
-        setError(false); // Устанавливаем состояние ошибки в false (на всякий случай сбрасываем старые ошибки).
+        setLoading(true); // Состояние загрузки
+        setError(false); // Сброс ошибок
 
-        const movie = await fetchMovieDetails(movieId); // Запрос на получение данных о фильме по movieId.
-        setMovie(movie); // Сохраняем полученные данные в состоянии movie.
+        const movie = await fetchMovieDetails(movieId); // Запрос к API
+        setMovie(movie); // Сохранение данных фильма
       } catch (error) {
-        // Если произошла ошибка при получении данных.
-        console.log(error); // Логируем ошибку в консоль.
-        setError(true); // Устанавливаем состояние ошибки в true.
+        console.log(error);
+        setError(true);
       } finally {
-        setLoading(false); // В любом случае устанавливаем состояние загрузки в false после завершения запроса.
+        setLoading(false);
       }
     }
-    fetchData(); // Вызов асинхронной функции fetchData.
-  }, [movieId]); // Эффект сработает при изменении значения movieId.
+
+    fetchData();
+  }, [movieId]);
 
   return (
     <div>
       {loading && <Loader />}
-      Loader.
       {error && <Error />}
-      {movie && ( // Если данные о фильме получены, отображаем информацию о фильме.
+      {movie && (
         <div className={css.container}>
           <div className={css.descriptionText}>
             <img
-              src={getImageUrl(movie.poster_path)} // Формируем URL для изображения постера фильма.
-              alt={movie.title} // Описание изображения (название фильма).
-              className={css.poster} // Применяем стили для изображения.
+              src={getImageUrl(movie.poster_path)}
+              alt={movie.title}
+              className={css.poster}
             />
             <div>
               <h2 className={css.title}>
-                {movie.title} ({movie.release_date.slice(0, 4)}){" "}
-                {/* Название фильма и год выпуска */}
+                {movie.title} ({movie.release_date.slice(0, 4)})
               </h2>
-              <p className={css.userScore}>User score: {movie.vote_average}</p>{" "}
-              {/* Оценка фильма */}
-              <p className={css.sectionTitle}>Overview</p>{" "}
-              {/* Заголовок для описания фильма */}
-              <p>{movie.overview}</p> {/* Описание фильма */}
-              <p className={css.sectionTitle}>Genres</p>{" "}
-              {/* Заголовок для жанров фильма */}
-              <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>{" "}
-              {/* Перечень жанров, разделенных запятой */}
+              <p className={css.userScore}>User score: {movie.vote_average}</p>
+              <p className={css.sectionTitle}>Overview</p>
+              <p>{movie.overview}</p>
+              <p className={css.sectionTitle}>Genres</p>
+              <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
             </div>
           </div>
-          <p className={css.underImage}>Additional information</p>{" "}
+          <p className={css.underImage}>Additional information</p>
           <ul className={css.extraInfoLinks}>
             <li>
-              <Link to="cast">Cast</Link>
+              <Link to="cast" state={{ from: location }}>
+                Cast
+              </Link>{" "}
+              {/* Передаем состояние "откуда" */}
             </li>
             <li>
-              <Link to="reviews">Reviews</Link>
+              <Link to="reviews" state={{ from: location }}>
+                Reviews
+              </Link>
             </li>
           </ul>
           <Outlet />
