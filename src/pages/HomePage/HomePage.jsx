@@ -17,14 +17,9 @@ const HomePage = () => {
         setError(false);
         setMovies([]);
 
-        // Логирование перед загрузкой данных
-        console.log("Fetching trending movies...");
+
 
         const movies = await fetchTrendingMovies();
-
-        // Логирование полученных данных
-        console.log("Fetched movies:", movies);
-
         setMovies(movies);
       } catch (error) {
         console.log("Error fetching movies:", error);
