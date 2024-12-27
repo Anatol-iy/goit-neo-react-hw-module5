@@ -16,40 +16,50 @@ const axiosInstance = axios.create({
   headers, // Устанавливает заголовки для всех запросов.
 });
 
+// Функция для получения списка популярных фильмов за день с русским языком.
 export const fetchTrendingMovies = async () => {
-  const response = await axiosInstance.get("/trending/movie/day");
-  // Выполняет GET-запрос к API для получения списка популярных фильмов за день.
-  return response.data.results; // Возвращает массив популярных фильмов из ответа API.
+  const response = await axiosInstance.get("/trending/movie/day", {
+    params: { language: "ru" }, // Указываем параметр языка
+  });
+  return response.data.results; // Возвращаем массив популярных фильмов.
 };
 
+// Функция для поиска фильмов по ключевому слову с русским языком.
 export const searchMovies = async (query) => {
   const response = await axiosInstance.get("/search/movie", {
-    params: { query }, // Передает параметр поиска (ключевое слово) в URL запроса.
+    params: { query, language: "ru" }, // Параметр поиска и языка
   });
-  return response.data.results; // Возвращает массив найденных фильмов.
+  return response.data.results; // Возвращаем массив найденных фильмов.
 };
 
+// Функция для получения подробной информации о фильме по его ID с русским языком.
 export const fetchMovieDetails = async (movieId) => {
-  const response = await axiosInstance.get(`/movie/${movieId}`);
-  // Выполняет GET-запрос для получения подробной информации о фильме по его ID.
-  return response.data; // Возвращает объект с деталями фильма.
+  const response = await axiosInstance.get(`/movie/${movieId}`, {
+    params: { language: "ru" }, // Указываем параметр языка
+  });
+  return response.data; // Возвращаем объект с деталями фильма.
 };
 
+// Функция для получения списка актеров фильма по его ID с русским языком.
 export const fetchMovieCast = async (movieId) => {
-  const response = await axiosInstance.get(`/movie/${movieId}/credits`);
-  // Выполняет GET-запрос для получения данных об актерском составе фильма.
-  return response.data.cast; // Возвращает массив с информацией об актерах.
+  const response = await axiosInstance.get(`/movie/${movieId}/credits`, {
+    params: { language: "ru" }, // Указываем параметр языка
+  });
+  return response.data.cast; // Возвращаем массив с информацией об актерах.
 };
 
+// Функция для получения отзывов о фильме по его ID с русским языком.
 export const fetchMovieReviews = async (movieId) => {
-  const response = await axiosInstance.get(`/movie/${movieId}/reviews`);
-  // Выполняет GET-запрос для получения отзывов о фильме.
-  return response.data.results; // Возвращает массив с отзывами.
+  const response = await axiosInstance.get(`/movie/${movieId}/reviews`, {
+    params: { language: "ru" }, // Указываем параметр языка
+  });
+  return response.data.results; // Возвращаем массив с отзывами.
 };
 
+// Функция для получения URL изображения по пути.
 export const getImageUrl = (path) => {
   if (!path) {
-    throw new Error("Image path is required.");
+    throw new Error("Необходим путь к изображению.");
   }
 
   return `${imageBaseUrl}${path}`;
