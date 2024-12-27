@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import css from "./BackButton.module.css";
 
-function BackButton() {
-  const navigate = useNavigate();
+function BackButton({ onClick }) {
   return (
-    <button className={css.backButton} onClick={() => navigate(-1)}>
+    <button className={css.backButton} onClick={onClick}>
       <span className={css.arrow}>←</span> Go back
     </button>
   );

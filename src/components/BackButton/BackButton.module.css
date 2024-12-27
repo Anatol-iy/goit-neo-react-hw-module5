@@ -10,7 +10,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   border: 2px solid black;
-  width: auto;
+  width: 100px;
+  height: 25px;
 }
 
 .backButton:hover {
